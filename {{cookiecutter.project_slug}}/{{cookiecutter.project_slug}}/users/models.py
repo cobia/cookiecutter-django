@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 {%- if cookiecutter.username_type == "email" %}
 
-from .managers import UserManager
+from {{ cookiecutter.project_slug }}.users.managers import UserManager
 {%- endif %}
 
 
@@ -22,10 +22,7 @@ class User(AbstractUser):
     check forms.SignupForm and forms.SocialSignupForms accordingly.
     """
 
-    # First and last name do not cover name patterns around the globe
-    name = CharField(_("Name of User"), blank=True, max_length=255)
-    first_name = None  # type: ignore[assignment]
-    last_name = None  # type: ignore[assignment]
+    middle_name = CharField(_('middle name'), max_length=255, blank=True)
     {%- if cookiecutter.username_type == "email" %}
     email = EmailField(_("email address"), unique=True)
     username = None  # type: ignore[assignment]
